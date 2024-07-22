@@ -1,32 +1,38 @@
-<script setup></script>
+<script setup>
+import SplahsScreen from './components/SplashScreen.vue'
+import { defineAsyncComponent } from 'vue'
 
-<template></template>
+const Home = defineAsyncComponent(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(import('./components/Home.vue'))
+    }, 2000)
+  })
+})
+</script>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<template>
+  <Suspense>
+    <template #default>
+      <Home />
+    </template>
+    <template #fallback>
+      <SplahsScreen />
+    </template>
+  </Suspense>
+</template>
+
+<style>
+html,
+body,
+.app {
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+* {
+  --brand-green: #04b500;
+  --brand-blue: #0689b0;
 }
 </style>
